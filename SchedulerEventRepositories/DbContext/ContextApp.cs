@@ -3,9 +3,9 @@ using SchedulerEventRepositories.Entities;
 
 namespace SchedulerEventRepositories.DbContext;
 
-public class Context : Microsoft.EntityFrameworkCore.DbContext
+public class ContextApp : Microsoft.EntityFrameworkCore.DbContext
 {
-    public Context(DbContextOptions<Context> context) : base(context)
+    public ContextApp(DbContextOptions<ContextApp> context) : base(context)
     {
     }
 
@@ -17,5 +17,5 @@ public class Context : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Developer> Developers { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Event> Events { get; set; }
-
+    public DbSet<EventInvitation> EventInvitations { get; set; }
 }

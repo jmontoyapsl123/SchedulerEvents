@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ScedulerEventDomain.Services;
+using ScedulerEventDomain.Services.Interfaces;
 using SchedulerEventCommon.Dtos;
 
 namespace SchedulerEventApi.Controllers;
@@ -14,12 +16,13 @@ public class DeveloperController : Controller
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<ActionResult<int>> CreateDeveloper([FromBody]DeveloperDto developer)
     {
         var result = await _developerService.CreateDeveloper(developer);
         return Ok(new
         {
-            items = result
+            developerId = result
         });
     }
 
