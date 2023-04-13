@@ -16,14 +16,48 @@ public class EventInvitationController : Controller
     }
 
     [HttpPost]
-    [AllowAnonymous]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<ActionResult<int>> CreateEventInvitation([FromBody]EventInvitationDto eventInvitationDto)
+    [AllowAnonymous]
+    public async Task<ActionResult<int>> CreateEventInvitation([FromBody] EventInvitationDto eventInvitationDto)
     {
         var result = await _eventInvitationService.CreateEventInvitation(eventInvitationDto);
         return Ok(new
         {
             developerId = result
+        });
+    }
+
+    [HttpGet]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [AllowAnonymous]
+    public async Task<ActionResult<int>> GetEventInvitationReport(ReportParamDto reportParamDto)
+    {
+        var result = await _eventInvitationService.GetEventInvitationReport(reportParamDto);
+        return Ok(new
+        {
+            result = result
+        });
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<ActionResult<bool>> AcceptEventInvitation([FromQuery] string hash)
+    {
+        var result = await _eventInvitationService.AcceptEventInvitation(hash);
+        return Ok(new
+        {
+            result = result
+        });
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<ActionResult<bool>> RejectEventInvitation([FromQuery] string hash)
+    {
+        var result = await _eventInvitationService.RejectEventInvitation(hash);
+        return Ok(new
+        {
+            result = result
         });
     }
 

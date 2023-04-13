@@ -9,7 +9,7 @@ using SchedulerEventRepositories.Repositories.Interfaces;
 namespace ScedulerEventDomain.Services.Implementations;
 public class EventService : IEventService
 {
-    private static IEventRepository _eventRepository;
+    private readonly IEventRepository _eventRepository;
     private readonly IValidator<EventDto> _eventValidator;
     private readonly IWeatherstackService _weatherstackService;
     public EventService(IEventRepository eventRepository, IValidator<EventDto> eventValidator, IWeatherstackService weatherstackService)

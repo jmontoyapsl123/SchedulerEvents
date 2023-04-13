@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SchedulerEventRepositories.DbContext;
 using SchedulerEventRepositories.Entities;
 using SchedulerEventRepositories.Repositories.Interfaces;
@@ -17,6 +18,9 @@ public class EventRepository : IEventRepository
         await _context.SaveChangesAsync();
     }
 
-
+    public async Task<Event> GetEventById(int eventId)
+    {
+         return await _context.Events.Where(u => u.Id == eventId).FirstOrDefaultAsync();
+    }
 
 }

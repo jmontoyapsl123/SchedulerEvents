@@ -11,4 +11,5 @@ public class EventInvitation
     public int State { get; set; }
     public int EventId { get; set; }
     public int DeveloperId { get; set; }
+    public string HasInvitation {get; set;}
 }

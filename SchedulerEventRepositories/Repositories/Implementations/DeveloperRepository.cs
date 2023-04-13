@@ -22,4 +22,9 @@ public class DeveloperRepository : IDeveloperRepository
     {
          return await _context.Developers.Where(u => u.Email == email).FirstOrDefaultAsync();
     }
+
+    public async Task<Developer> GetDeveloperById(int developerId)
+    {
+         return await _context.Developers.Where(u => u.Id == developerId).FirstOrDefaultAsync();
+    }
 }

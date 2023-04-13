@@ -32,6 +32,7 @@ namespace SchedulerEventApi.Extensions
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IWeatherstackService, WeatherstackService>();
             services.AddTransient<IEventInvitationService, EventInvitationService>();
+            services.AddTransient<ISendEmailService, SendEmailService>();
         }
 
         public static void ConfigureCors(this IServiceCollection services)
