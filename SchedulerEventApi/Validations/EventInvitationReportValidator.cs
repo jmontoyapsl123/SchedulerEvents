@@ -7,8 +7,8 @@ namespace SchedulerEventApi.Validations
     {
         public EventInvitationReportValidator()
         {
-            RuleFor(x => x.EventId).NotNull();
-            RuleFor(x => x.StateInvitation).NotNull();
+            RuleFor(x => x.EventId).GreaterThan(0);
+            RuleFor(x => x.StateInvitation).GreaterThan(0);
         }
     }
 }

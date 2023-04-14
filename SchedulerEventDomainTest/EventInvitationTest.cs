@@ -169,4 +169,41 @@ public class EventInvitationTest
         Assert.Equal(invitation.State, 2);
     }
 
+    [Fact]
+    public async void Get_Event_Invitation_Report_Should_Fail()
+    {
+        //Arrange
+        var resultValidation = new ValidationResult();
+        var _parameterDto = new ReportParamDto();
+        resultValidation.Errors.Add(new ValidationFailure("EventId", "'Event Id' must be greater than '0'."));
+        _reportParameterValidator.Setup(validator => validator.ValidateAsync(_parameterDto, It.IsAny<CancellationToken>()))
+        .ReturnsAsync(resultValidation);
+
+        var result = await _eventInvitationService.GetEventInvitationReport(_parameterDto);
+        Assert.True(result.HasError);
+        Assert.Equal("'Event Id' must be greater than '0'.", result.Errors);
+
+    }
+
+    [Fact]
+    public async void Get_Event_Invitation_Report_Should_Result()
+    {
+        var _parameterDto = new ReportParamDto();
+        _reportParameterValidator.Setup(validator => validator.ValidateAsync(_parameterDto, It.IsAny<CancellationToken>()))
+         .ReturnsAsync(new ValidationResult());
+        List<EventInvitationReportDto> eventInvitationReportDtos = new List<EventInvitationReportDto>();
+        eventInvitationReportDtos.Add(new EventInvitationReportDto
+        {
+            DeveloperEmail = "test@test.com",
+            EventDate = new DateTime(),
+            EventName = "Evento 1",
+            StateInvitation = 1
+        });
+          _eventInvitationRepository.Setup(r => r.GetEventInvitationReport(It.IsAny<int>(), It.IsAny<int>()))
+        .ReturnsAsync(eventInvitationReportDtos);
+        var result = await _eventInvitationService.GetEventInvitationReport(_parameterDto);
+        _eventInvitationRepository.Verify(r => r.GetEventInvitationReport(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
+        _reportParameterValidator.Verify(x => x.ValidateAsync(_parameterDto, It.IsAny<CancellationToken>()), Times.Once);
+        Assert.True(eventInvitationReportDtos.SequenceEqual(result.Result));
+    }
 }
