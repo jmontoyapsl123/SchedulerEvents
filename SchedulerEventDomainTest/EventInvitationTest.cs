@@ -199,6 +199,7 @@ public class EventInvitationTest
             EventName = "Evento 1",
             StateInvitation = 1
         });
+        
           _eventInvitationRepository.Setup(r => r.GetEventInvitationReport(It.IsAny<int>(), It.IsAny<int>()))
         .ReturnsAsync(eventInvitationReportDtos);
         var result = await _eventInvitationService.GetEventInvitationReport(_parameterDto);
